@@ -23,7 +23,7 @@ jobs:
     - name: Setup .NET
       uses: actions/setup-dotnet@v4
       with:
-        dotnet-version: '9.0.x'
+        dotnet-version: '8.0.x'
         
     - name: Restore dependencies
       run: |
@@ -33,7 +33,7 @@ jobs:
     - name: Build and publish
       run: |
         cd TenTen
-        dotnet publish TenTenApp.csproj -c Release -o publish -p:StaticWebAssetsEnabled=false -p:PublishTrimmed=false
+        dotnet publish TenTenApp.csproj -c Release -o publish -p:StaticWebAssetsEnabled=false
       
     - name: Setup Pages
       uses: actions/configure-pages@v4
