@@ -44,10 +44,26 @@ jobs:
         cd TenTen
         dotnet restore TenTenApp.csproj --verbosity normal
         
+    - name: Clean existing framework files
+      run: |
+        cd TenTen
+        rm -rf wwwroot/_framework
+        rm -f wwwroot/*.gz
+        rm -f wwwroot/*.br
+        find wwwroot -name "*.gz" -delete
+        find wwwroot -name "*.br" -delete
+        
     - name: Build and publish
       run: |
         cd TenTen
         dotnet publish TenTenApp.csproj -c Release -o publish --verbosity normal
+        
+    - name: Copy published files to wwwroot
+      run: |
+        cd TenTen
+        cp -r publish/wwwroot/* wwwroot/
+        ls -la wwwroot/
+        ls -la wwwroot/_framework/
       
     - name: Setup Pages
       uses: actions/configure-pages@v4
@@ -55,7 +71,7 @@ jobs:
     - name: Upload artifact
       uses: actions/upload-pages-artifact@v3
       with:
-        path: './TenTen/publish/wwwroot'
+        path: './TenTen/wwwroot'
 
   deploy:
     environment:
