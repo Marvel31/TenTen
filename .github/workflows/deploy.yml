@@ -20,10 +20,15 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v4
       
-    - name: Setup .NET
+    - name: Setup .NET 8.0
       uses: actions/setup-dotnet@v4
       with:
         dotnet-version: '8.0.403'
+        
+    - name: Verify .NET version
+      run: |
+        dotnet --version
+        dotnet --list-sdks
         
     - name: Restore dependencies
       run: |
