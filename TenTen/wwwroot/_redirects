@@ -1,6 +1,0 @@
-# GitHub Pages redirects and headers
-/*    /index.html   200
-
-# CSP Headers for Blazor WebAssembly
-/*
-  Content-Security-Policy: default-src 'self' 'unsafe-inline' 'unsafe-eval' blob: data: https: wss: ws:; script-src 'self' 'unsafe-inline' 'unsafe-eval' blob: data: https:; script-src-elem 'self' 'unsafe-inline' 'unsafe-eval' blob: data: https:; style-src 'self' 'unsafe-inline' https: data:; img-src 'self' data: https: blob:; font-src 'self' https: data:; connect-src 'self' https: wss: ws:; frame-src 'self' https:; object-src 'none'; base-uri 'self'; form-action 'self'
