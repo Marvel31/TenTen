@@ -13,134 +13,455 @@
 
     <div class="examples-header">
         <h1>💬 느낌 대화 예시</h1>
-        <p>부부가 서로의 마음을 나누는 다양한 대화 주제와 예시</p>
+        <p>감정을 표현하고 공유하는 다양한 느낌들</p>
     </div>
 
-    <div class="examples-categories">
-        <div class="category-card">
-            <div class="category-header">
-                <div class="category-title">
-                    <h3>😊 감정 표현하기</h3>
-                    <p>서로의 감정을 솔직하게 나누는 방법</p>
-                </div>
-                <div class="category-toggle">
-                    <span class="bi bi-chevron-down"></span>
-                </div>
-            </div>
-            <div class="examples-list">
-                <div class="example-item">
-                    <h4>오늘의 기분</h4>
-                    <p>"오늘은 정말 기분이 좋았어. 아침에 커피 마시면서 창밖을 바라보니 새가 지저귀고 있었는데, 그 순간 마음이 평화로워졌어."</p>
-                </div>
-                <div class="example-item">
-                    <h4>스트레스 해소</h4>
-                    <p>"요즘 일 때문에 스트레스가 많아서 힘들었는데, 너와 이렇게 이야기하니까 마음이 한결 나아져."</p>
-                </div>
-                <div class="example-item">
-                    <h4>감사 표현</h4>
-                    <p>"오늘 너가 도와준 일 정말 고마웠어. 그 작은 배려 하나하나가 다 소중해."</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="category-card">
-            <div class="category-header">
-                <div class="category-title">
-                    <h3>💭 생각 나누기</h3>
-                    <p>서로의 생각과 관점을 존중하며 나누는 대화</p>
-                </div>
-                <div class="category-toggle">
-                    <span class="bi bi-chevron-down"></span>
-                </div>
-            </div>
-            <div class="examples-list">
-                <div class="example-item">
-                    <h4>미래 계획</h4>
-                    <p>"내년에는 우리 가족과 함께 여행을 더 자주 가고 싶어. 너는 어떤 계획이 있어?"</p>
-                </div>
-                <div class="example-item">
-                    <h4>육아 고민</h4>
-                    <p>"아이 교육에 대해 고민이 많은데, 너는 어떤 생각이야? 우리 함께 토론해보자."</p>
-                </div>
-                <div class="example-item">
-                    <h4>일상의 소소한 것들</h4>
-                    <p>"오늘 마트에서 본 새로운 상품이 신기했어. 이런 작은 변화들도 재미있지 않아?"</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="category-card">
-            <div class="category-header">
-                <div class="category-title">
-                    <h3>💕 사랑 표현하기</h3>
-                    <p>서로에 대한 사랑과 애정을 표현하는 방법</p>
-                </div>
-                <div class="category-toggle">
-                    <span class="bi bi-chevron-down"></span>
-                </div>
-            </div>
-            <div class="examples-list">
-                <div class="example-item">
-                    <h4>감동적인 순간</h4>
-                    <p>"너가 오늘 아침에 준비해준 도시락을 보면서 정말 감동받았어. 이런 작은 배려가 사랑이구나."</p>
-                </div>
-                <div class="example-item">
-                    <h4>고마움 표현</h4>
-                    <p>"내가 힘들 때마다 옆에 있어줘서 정말 고마워. 너가 있어서 힘이 나."</p>
-                </div>
-                <div class="example-item">
-                    <h4>미래에 대한 약속</h4>
-                    <p>"우리 앞으로도 이렇게 서로를 아끼고 사랑하며 살아가자. 함께라서 행복해."</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="category-card">
-            <div class="category-header">
-                <div class="category-title">
-                    <h3>🤝 문제 해결하기</h3>
-                    <p>갈등 상황에서 서로를 이해하고 해결하는 대화</p>
-                </div>
-                <div class="category-toggle">
-                    <span class="bi bi-chevron-down"></span>
-                </div>
-            </div>
-            <div class="examples-list">
-                <div class="example-item">
-                    <h4>오해 풀기</h4>
-                    <p>"어제 내가 성급하게 말한 것 같아서 미안해. 너의 마음을 더 잘 이해하려고 노력할게."</p>
-                </div>
-                <div class="example-item">
-                    <h4>서로의 입장 이해</h4>
-                    <p>"내 입장만 생각했던 것 같아. 너의 생각과 감정도 충분히 이해할 수 있어."</p>
-                </div>
-                <div class="example-item">
-                    <h4>해결책 찾기</h4>
-                    <p>"이 문제를 어떻게 해결하면 좋을까? 우리 함께 생각해보자."</p>
-                </div>
-            </div>
-        </div>
+    <!-- 감정 선택 버튼들 -->
+    <div class="emotion-buttons">
+        <button class="btn btn-success emotion-btn @(selectedEmotion == joy ? "active" : "")" 
+                @onclick="() => SelectEmotion(joy)">
+            <span class="bi bi-emoji-smile"></span> 기쁨
+        </button>
+        <button class="btn btn-warning emotion-btn @(selectedEmotion == fear ? "active" : "")" 
+                @onclick="() => SelectEmotion(fear)">
+            <span class="bi bi-emoji-frown"></span> 두려움
+        </button>
+        <button class="btn btn-danger emotion-btn @(selectedEmotion == anger ? "active" : "")" 
+                @onclick="() => SelectEmotion(anger)">
+            <span class="bi bi-emoji-angry"></span> 분노
+        </button>
+        <button class="btn btn-info emotion-btn @(selectedEmotion == sadness ? "active" : "")" 
+                @onclick="() => SelectEmotion(sadness)">
+            <span class="bi bi-emoji-tear"></span> 슬픔
+        </button>
     </div>
 
-    <div class="tips-section">
-        <h2>💡 효과적인 대화를 위한 팁</h2>
-        <div class="tips-grid">
-            <div class="tip-item">
-                <h4>👂 잘 들어주기</h4>
-                <p>상대방의 말을 끝까지 듣고, 이해하려고 노력하세요.</p>
-            </div>
-            <div class="tip-item">
-                <h4>❤️ 공감하기</h4>
-                <p>상대방의 감정을 인정하고 공감의 마음을 표현하세요.</p>
-            </div>
-            <div class="tip-item">
-                <h4>🗣️ 솔직하게 말하기</h4>
-                <p>자신의 감정과 생각을 솔직하고 진심으로 표현하세요.</p>
-            </div>
-            <div class="tip-item">
-                <h4>🤗 존중하기</h4>
-                <p>서로의 다른 의견과 감정을 존중하고 인정하세요.</p>
-            </div>
+    <!-- 선택된 감정에 따른 내용 표시 -->
+    @if (!string.IsNullOrEmpty(selectedEmotion))
+    {
+        <div class="emotion-content">
+            @if (selectedEmotion == joy)
+            {
+                <div class="emotion-section">
+                    <h2>😊 기쁨</h2>
+                    <div class="emotion-list">
+                        <div class="emotion-item">
+                            <h4>가벼운</h4>
+                            <p>새털처럼 빈 기방을 들 때처럼, 힘든 숙제를 다 마쳤을 때처럼</p>
+                        </div>
+                        <div class="emotion-item">
+                            <h4>개운한</h4>
+                            <p>목욕한 다음처럼, 고해성사를 보았을 때처럼</p>
+                        </div>
+                        <div class="emotion-item">
+                            <h4>감격스런</h4>
+                            <p>선생님께 뜻하지 않게 칭찬을 들었을 때처럼, 올림픽 시상식에서 태극기가 올라가고 애국가가 울려 펴질 때처럼</p>
+                        </div>
+                        <div class="emotion-item">
+                            <h4>감동을받은</h4>
+                            <p>원하던 선물을 배우자에게 받았을 때처럼, 뜻밖에도 말썽꾸러기 아들로부터 사랑한다는 편지를 받았을 때처럼</p>
+                        </div>
+                        <div class="emotion-item">
+                            <h4>경이로운</h4>
+                            <p>바다 속 신비의 세계를 보았을 때처럼, 첫 출산 후 아이를 볼 때처럼</p>
+                        </div>
+                        <div class="emotion-item">
+                            <h4>경쾌한</h4>
+                            <p>아침에 일어나 행진곡을 들을 때처럼, 리듬 체조를 하는 여자 선수의 동작을 볼 때처럼</p>
+                        </div>
+                        <div class="emotion-item">
+                            <h4>고마운</h4>
+                            <p>길을 친절하게 안내 받았을 때처럼, 무거운 짐을 누군가 들어 주었을 때처럼</p>
+                        </div>
+                        <div class="emotion-item">
+                            <h4>고요한</h4>
+                            <p>새벽에 혼자 깨어 있을 때처럼, 잔잔한 호수를 바라볼 때처럼</p>
+                        </div>
+                        <div class="emotion-item">
+                            <h4>기쁨에넘치는</h4>
+                            <p>아이가 어려운 입학시험에 합격했을 때처럼, 복권에 당첨되었을 때처럼</p>
+                        </div>
+                        <div class="emotion-item">
+                            <h4>넉넉한</h4>
+                            <p>주머니에 용돈이 투둑합 떠처럼</p>
+                        </div>
+                        <div class="emotion-item">
+                            <h4>다행스런</h4>
+                            <p>못 찾던 중요한 서류를 찾았을 때처럼, 쫓기는 꿈을 꾸다가 깨어났을 때처럼, 걱정했던 병이 정상이라고 판명되었을 때처럼</p>
+                        </div>
+                        <div class="emotion-item">
+                            <h4>단란한</h4>
+                            <p>가족이 가까운 산으로 피크닉을 갈 때처럼</p>
+                        </div>
+                        <div class="emotion-item">
+                            <h4>달콤한</h4>
+                            <p>꿀처럼 연인과 함께 마시던 차의 향기처럼, 첫 입맞춤처럼</p>
+                        </div>
+                        <div class="emotion-item">
+                            <h4>반가운</h4>
+                            <p>오래 못 본 친구를 우연히 길에서 만났을 때처럼, 기다리던 사람이왔을 때처럼, 긴 가뭄 끝에 비가 올 때처럼</p>
+                        </div>
+                        <div class="emotion-item">
+                            <h4>밝아진</h4>
+                            <p>걱정스러운 일이 잘 해결되고 난 후의 표정처럼</p>
+                        </div>
+                        <div class="emotion-item">
+                            <h4>상쾌한</h4>
+                            <p>운동 후 사워를 했을 때처럼, 새벽 공기를 마시며 산책할 때처럼</p>
+                        </div>
+                        <div class="emotion-item">
+                            <h4>생기도는</h4>
+                            <p>운동을 하고 나서 활력이 넘치는 표정처럼, 아침 이슬 맺힌 나팔꽃처럼</p>
+                        </div>
+                        <div class="emotion-item">
+                            <h4>시원한</h4>
+                            <p>앓던 이를 뺐을 때처럼, 땀 들리고 나서 맥주 한잔 할 때처럼</p>
+                        </div>
+                        <div class="emotion-item">
+                            <h4>신선한</h4>
+                            <p>방금 잡아 올린 물고기처럼, 솔발에서 솔 항기를 맡을 때처럼, 갓 따온 과일처럼</p>
+                        </div>
+                        <div class="emotion-item">
+                            <h4>자신만만한</h4>
+                            <p>잘 아는 문제를 풀 때처럼, 나보다 약한 사람과 힘 겨루기를 할 때처럼</p>
+                        </div>
+                        <div class="emotion-item">
+                            <h4>짜릿짜릿한</h4>
+                            <p>서커스의 묘기를 볼 때처럼, 놀이 기구를 탈 때처럼</p>
+                        </div>
+                        <div class="emotion-item">
+                            <h4>충족한</h4>
+                            <p>밥을 배불리 먹고 날 때처럼, 적금의 마지막 회를 부을 때처럼, 지동차에 기름을 가득 채웠을 때처럼</p>
+                        </div>
+                        <div class="emotion-item">
+                            <h4>쾌적한</h4>
+                            <p>깨끗한 새 이불을 덮을 때처럼, 집을 말끔히 치우고 휴식을 취할 때처럼, 경치 좋은 창가에 앉아 차를 마실 때처럼</p>
+                        </div>
+                        <div class="emotion-item">
+                            <h4>평화로운</h4>
+                            <p>잔잔한 바다를 내다볼 때처럼, 가족과 함께 기도한 후처럼</p>
+                        </div>
+                        <div class="emotion-item">
+                            <h4>포근한</h4>
+                            <p>흰눈이 소복이 내린 것을 보았을 때처럼, 포옹하고 있을 때처럼, 봄날 양지에 앉아 햇별을 받을 때처럼</p>
+                        </div>
+                        <div class="emotion-item">
+                            <h4>풍요로운</h4>
+                            <p>누럼 가을 들넉을 불 때처럼. 온 가족이 다 모였을 때처럼</p>
+                        </div>
+                        <div class="emotion-item">
+                            <h4>푸짐한</h4>
+                            <p>돼지를 잡아 잔치를 벌렸을 때처럼, 맛있는 음식이 쌓인 것을 볼 때처럼</p>
+                        </div>
+                        <div class="emotion-item">
+                            <h4>환한</h4>
+                            <p>답답한 터널을 지났을 때처럼, 대낮에 영화관에서 나왔을 때처림, 해맑은 웃음을 볼 때처럼</p>
+                        </div>
+                    </div>
+                </div>
+            }
+            else if (selectedEmotion == fear)
+            {
+                <div class="emotion-section">
+                    <h2>😰 두려움</h2>
+                    <div class="emotion-list">
+                        <div class="emotion-item">
+                            <h4>간담이 서늘해지는</h4>
+                            <p>캄캄한 골목길에서 갑자기 사람과 맞닥뜨렸을 때처럼, 부억칼을 사용하다가 실수로 떨어뜨렸을 때처럼</p>
+                        </div>
+                        <div class="emotion-item">
+                            <h4>걱정스러운</h4>
+                            <p>아이가 12시가 넘도록 전화도 없이 안 들어 올 때처럼</p>
+                        </div>
+                        <div class="emotion-item">
+                            <h4>겁먹은</h4>
+                            <p>장난치다 유리창을 깨 아이가 꾸중을 기다릴 때처럼, 험악하게 생긴 사람이 할 말이 있는 듯 다가올 때처럼</p>
+                        </div>
+                        <div class="emotion-item">
+                            <h4>고생스러운</h4>
+                            <p>홀어머니가 아이들 학교 보내려고 행상을 할 때처럼, 무거운 짐을 지고 험한 길을 걸어갈 때처럼</p>
+                        </div>
+                        <div class="emotion-item">
+                            <h4>근심스러운</h4>
+                            <p>공공요금이 오를 것이라는 뉴스를 들었을 때처럼, 가족 병문안을 갈 때처럼, 의사의 진찰 결과를 기다릴 때처럼</p>
+                        </div>
+                        <div class="emotion-item">
+                            <h4>긴박한</h4>
+                            <p>간첩을 수색하는 군인들의 표정처럼, 추리 소설을 볼 때처럼</p>
+                        </div>
+                        <div class="emotion-item">
+                            <h4>긴장된</h4>
+                            <p>미끄러운 눈길을 걸을 때처럼, 처음 운전대를 잡고 운전할 때처럼</p>
+                        </div>
+                        <div class="emotion-item">
+                            <h4>난감한</h4>
+                            <p>차비가 없을 때처럼, 자동차 면허시험에 여러 번 떨어졌을 때처럼</p>
+                        </div>
+                        <div class="emotion-item">
+                            <h4>냉랭한</h4>
+                            <p>불 때지 않은 방의 윗목처럼, 부부싸움을 하고 돌아 누웠을 때처럼</p>
+                        </div>
+                        <div class="emotion-item">
+                            <h4>답답한</h4>
+                            <p>창없는 방에 오래 않아 있을 때처럼, 내 말을 믿어주지 않는 사람을 대할 때처럼</p>
+                        </div>
+                        <div class="emotion-item">
+                            <h4>당황한</h4>
+                            <p>우산없이 나갔다가 비를 만났을 때처럼, 몰래 외출하려다가 엄마에게 들켰을 때처럼</p>
+                        </div>
+                        <div class="emotion-item">
+                            <h4>두려운</h4>
+                            <p>성난 파도를 볼 때처럼 발길을 혼자 컬을 때처림, 최후의 심판을 생각할 때처럼</p>
+                        </div>
+                        <div class="emotion-item">
+                            <h4>무안한</h4>
+                            <p>바지 지퍼가 내려져 있음을 알았을 때처럼, 본인이 없는 줄 모르고 헐뜯었는데 바로 옆에 있는 것을 알았을 때처럼</p>
+                        </div>
+                        <div class="emotion-item">
+                            <h4>미안한</h4>
+                            <p>약속 시간에 늦었을 때처럼, 남의 집 일을 도와주다가 그릇을 깼을 때처럼</p>
+                        </div>
+                        <div class="emotion-item">
+                            <h4>불안한</h4>
+                            <p>건강진단을 받고 결과를 보러 갈 때처럼, 늦게까지 오지 않는 남편을 기다릴 때처럼</p>
+                        </div>
+                        <div class="emotion-item">
+                            <h4>서먹서먹한</h4>
+                            <p>처음 출근하여 아는 사람이 하나도 없을 때처럼, 싸웠던 친구와 우연히 같은 차를 타게 되었을 때처럼</p>
+                        </div>
+                        <div class="emotion-item">
+                            <h4>초초한</h4>
+                            <p>길이 막혀 약속 시간에 늦었을 때처럼</p>
+                        </div>
+                    </div>
+                </div>
+            }
+            else if (selectedEmotion == anger)
+            {
+                <div class="emotion-section">
+                    <h2>😠 분노</h2>
+                    <div class="emotion-list">
+                        <div class="emotion-item">
+                            <h4>괘씸한</h4>
+                            <p>달리는 차에 흙탕물이 튀었을 때처럼, 비꼬임을 당할 때처럼</p>
+                        </div>
+                        <div class="emotion-item">
+                            <h4>격분한</h4>
+                            <p>억울한 누명을 썼을 때처럼, 면전에서 욕을 먹을 때처럼</p>
+                        </div>
+                        <div class="emotion-item">
+                            <h4>골치아픈</h4>
+                            <p>몇 가지 중요한 약속이 중복되었을 때처럼, 일이 자꾸 꼬이기만 할 때처럼</p>
+                        </div>
+                        <div class="emotion-item">
+                            <h4>김빠진</h4>
+                            <p>따 놓은지 오래된 맥주처럼, 밤새워 한 숙제를 검사도 하지 않았을 때처럼</p>
+                        </div>
+                        <div class="emotion-item">
+                            <h4>답답한</h4>
+                            <p>전화가 잘 들리지 않을 때처럼, 말귀를 못 알아들을 때처럼, 시험 때 TV앞에 앉아 있는 아이를 볼 때처럼</p>
+                        </div>
+                        <div class="emotion-item">
+                            <h4>맥빠지는</h4>
+                            <p>배우자가 외식 약속을 취소할 때처럼, 공항에 친구 배웅하러 갔는데 친구는 벌써 떠나고 없을 때처럼</p>
+                        </div>
+                        <div class="emotion-item">
+                            <h4>불쾌한</h4>
+                            <p>승낙도 없이 합승하려는 기사를 볼 때처럼</p>
+                        </div>
+                        <div class="emotion-item">
+                            <h4>신경질나는</h4>
+                            <p>자꾸 잔소리를 할 때처럼, 새 옷에 김치 국물을 흘렸을 때처럼</p>
+                        </div>
+                        <div class="emotion-item">
+                            <h4>짜증스러운</h4>
+                            <p>통근버스를 놓치고 만원버스를 타고 갈 때처럼, 손님 맞을 시간이 되었는데 여기저기 어지러운 집안을 볼 때처럼, 숙제를 미룬 채 놀기에만 열중하는 아이들을 볼 때처럼</p>
+                        </div>
+                        <div class="emotion-item">
+                            <h4>화나는</h4>
+                            <p>값비싼 유리컵을 부주의로 깻을 때처럼, 재미있는 TV프로를 보는데 채널을 돌릴 때처럼</p>
+                        </div>
+                        <div class="emotion-item">
+                            <h4>황당한</h4>
+                            <p>며칠 찾던 물건이 쓰레기통에 버려져 있을 때처럼, 선물을 바꾸어 전달했을 때처럼, 회장실에서 휴지가 없을 때처럼</p>
+                        </div>
+                    </div>
+                </div>
+            }
+            else if (selectedEmotion == sadness)
+            {
+                <div class="emotion-section">
+                    <h2>😢 슬픔</h2>
+                    <div class="emotion-list">
+                        <div class="emotion-item">
+                            <h4>비참한</h4>
+                            <p>모든 사람 앞에서 잘못을 인정해야만 할 때처럼, 친구에게 배신 당했을 때처럼</p>
+                        </div>
+                        <div class="emotion-item">
+                            <h4>서글픈</h4>
+                            <p>낙엽이 뒹구는 길을 홀로 걸을 때처럼, 아이들에게 구세대 취급을 받는구나 하는 생각이 들 때처럼</p>
+                        </div>
+                        <div class="emotion-item">
+                            <h4>썰렁한</h4>
+                            <p>퇴근 후 아무도 없는 집에 들어설 때처럼, 웃기는 이야기를 했는데 아무도 안 웃을 때처럼</p>
+                        </div>
+                        <div class="emotion-item">
+                            <h4>처량한</h4>
+                            <p>도살장에 끌려가는 소를 볼 때처럼,비 오는 날 처마 밀에 않아 있는 참새를 볼 때처럼</p>
+                        </div>
+                        <div class="emotion-item">
+                            <h4>허탈한</h4>
+                            <p>정성 들여 준비 했는데 반응이 좋지 않을 때처럼, 회사에 몸바처 일했으나 승진에서 탈락된 것을 알았을 때처럼</p>
+                        </div>
+                        <div class="emotion-item">
+                            <h4>후회스러운</h4>
+                            <p>과음한 다음 날 아침처럼, 부부 씨움을 심하게 하고 난 후처럼</p>
+                        </div>
+                        <div class="emotion-item">
+                            <h4>쓸쓸한</h4>
+                            <p>추수가 끝난 들판에 홀로 서 있는 허수이비처럼</p>
+                        </div>
+                        <div class="emotion-item">
+                            <h4>외로운</h4>
+                            <p>길가에 홀로 서 있는 장승처럼</p>
+                        </div>
+                        <div class="emotion-item">
+                            <h4>고독한</h4>
+                            <p>무인도에 내팽겨쳐 있을 때처럼, 춥고 눈오는 날 아무도 없는 들판에 홀로 서 있을 때처럼</p>
+                        </div>
+                    </div>
+                </div>
+            }
         </div>
-    </div>
+    }
+
+    <!-- 감정을 선택하지 않았을 때 표시 -->
+    @if (string.IsNullOrEmpty(selectedEmotion))
+    {
+        <div class="emotion-guide">
+            <h3>💭 감정을 선택해보세요</h3>
+            <p>위의 버튼 중 하나를 클릭하여 해당 감정의 세부적인 표현들을 확인해보세요.</p>
+            <p>각 감정은 다양한 상황과 느낌으로 세분화되어 있어, 정확한 감정 표현에 도움이 됩니다.</p>
+        </div>
+    }
 </div>
+
+<style>
+.emotion-buttons {
+    display: flex;
+    gap: 1rem;
+    margin: 2rem 0;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.emotion-btn {
+    padding: 1rem 2rem;
+    font-size: 1.1rem;
+    border-radius: 25px;
+    border: 2px solid transparent;
+    transition: all 0.3s ease;
+    min-width: 120px;
+}
+
+.emotion-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.emotion-btn.active {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+.emotion-content {
+    margin-top: 2rem;
+}
+
+.emotion-section h2 {
+    color: #333;
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+.emotion-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1rem;
+}
+
+.emotion-item {
+    background: #f8f9fa;
+    border: 1px solid #e9ecef;
+    border-radius: 8px;
+    padding: 1rem;
+    transition: all 0.3s ease;
+}
+
+.emotion-item:hover {
+    background: #e9ecef;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.emotion-item h4 {
+    color: #495057;
+    margin-bottom: 0.5rem;
+    font-size: 1.1rem;
+}
+
+.emotion-item p {
+    color: #6c757d;
+    margin: 0;
+    line-height: 1.5;
+}
+
+.emotion-guide {
+    text-align: center;
+    padding: 3rem 1rem;
+    background: #f8f9fa;
+    border-radius: 10px;
+    margin-top: 2rem;
+}
+
+.emotion-guide h3 {
+    color: #495057;
+    margin-bottom: 1rem;
+}
+
+.emotion-guide p {
+    color: #6c757d;
+    margin-bottom: 0.5rem;
+}
+
+@@media (max-width: 768px) {
+    .emotion-buttons {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .emotion-btn {
+        width: 100%;
+        max-width: 200px;
+    }
+    
+    .emotion-list {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
+
+@code {
+    private const string joy = "joy";
+    private const string fear = "fear";
+    private const string anger = "anger";
+    private const string sadness = "sadness";
+    
+    private string selectedEmotion = "";
+
+    private void SelectEmotion(string emotion)
+    {
+        selectedEmotion = emotion;
+        StateHasChanged();
+    }
+}
