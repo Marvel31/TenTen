@@ -44,7 +44,7 @@ jobs:
     - name: Build and publish
       run: |
         cd TenTen
-        dotnet publish TenTenApp.csproj -c Release -o publish -p:StaticWebAssetsEnabled=false -p:PublishTrimmed=false --verbosity normal
+        dotnet publish TenTenApp.csproj -c Release -o publish --verbosity normal
       
     - name: Setup Pages
       uses: actions/configure-pages@v4
