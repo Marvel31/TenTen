@@ -3,7 +3,7 @@
   command = "cd TenTen && dotnet publish -c Release -o publish"
 
 [build.environment]
-  DOTNET_VERSION = "7.0.403"
+  DOTNET_VERSION = "9.0.0"
 
 [[redirects]]
   from = "/*"
