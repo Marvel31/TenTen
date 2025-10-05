@@ -14,19 +14,19 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v4
       
-    - name: Setup .NET 9.0
+    - name: Setup .NET 8.0
       uses: actions/setup-dotnet@v4
       with:
-        dotnet-version: '9.0.0'
+        dotnet-version: '8.0.0'
         
     - name: Remove other .NET versions
       run: |
         sudo rm -rf /usr/share/dotnet/sdk/7.0.*
-        sudo rm -rf /usr/share/dotnet/sdk/8.0.*
+        sudo rm -rf /usr/share/dotnet/sdk/9.0.*
         sudo rm -rf /usr/share/dotnet/shared/Microsoft.NETCore.App/7.0.*
         sudo rm -rf /usr/share/dotnet/shared/Microsoft.AspNetCore.App/7.0.*
-        sudo rm -rf /usr/share/dotnet/shared/Microsoft.NETCore.App/8.0.*
-        sudo rm -rf /usr/share/dotnet/shared/Microsoft.AspNetCore.App/8.0.*
+        sudo rm -rf /usr/share/dotnet/shared/Microsoft.NETCore.App/9.0.*
+        sudo rm -rf /usr/share/dotnet/shared/Microsoft.AspNetCore.App/9.0.*
         
     - name: Verify .NET version
       run: |
