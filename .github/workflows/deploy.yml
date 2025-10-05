@@ -25,10 +25,15 @@ jobs:
       with:
         dotnet-version: '9.0.x'
         
+    - name: Restore dependencies
+      run: |
+        cd TenTen
+        dotnet restore TenTenApp.csproj
+        
     - name: Build and publish
       run: |
         cd TenTen
-        dotnet publish TenTenApp.csproj -c Release -o publish --no-restore -p:StaticWebAssetsEnabled=false -p:PublishTrimmed=false
+        dotnet publish TenTenApp.csproj -c Release -o publish -p:StaticWebAssetsEnabled=false -p:PublishTrimmed=false
       
     - name: Setup Pages
       uses: actions/configure-pages@v4
