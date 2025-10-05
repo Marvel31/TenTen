@@ -49,6 +49,17 @@ jobs:
         cd TenTen
         dotnet publish TenTenApp.csproj -c Release -o publish --verbosity normal
         
+    - name: List published files
+      run: |
+        echo "=== Published files structure ==="
+        find ./TenTen/publish/wwwroot -type f | head -20
+        echo "=== _framework directory contents ==="
+        ls -la ./TenTen/publish/wwwroot/_framework/ || echo "_framework directory not found"
+        echo "=== css directory contents ==="
+        ls -la ./TenTen/publish/wwwroot/css/ || echo "css directory not found"
+        echo "=== lib directory contents ==="
+        ls -la ./TenTen/publish/wwwroot/lib/ || echo "lib directory not found"
+        
     - name: Setup Pages
       uses: actions/configure-pages@v4
       
