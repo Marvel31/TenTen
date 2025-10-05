@@ -25,6 +25,12 @@ jobs:
       with:
         dotnet-version: '8.0.403'
         
+    - name: Remove other .NET versions
+      run: |
+        sudo rm -rf /usr/share/dotnet/sdk/9.0.*
+        sudo rm -rf /usr/share/dotnet/shared/Microsoft.NETCore.App/9.0.*
+        sudo rm -rf /usr/share/dotnet/shared/Microsoft.AspNetCore.App/9.0.*
+        
     - name: Verify .NET version
       run: |
         dotnet --version
