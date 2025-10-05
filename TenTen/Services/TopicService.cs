@@ -7,6 +7,7 @@ public class TopicService : ITopicService
 {
     private readonly HttpClient _httpClient;
     private readonly JsonSerializerOptions _jsonOptions;
+    private static List<Topic> _topics = new();
 
     public TopicService(HttpClient httpClient)
     {
@@ -15,44 +16,54 @@ public class TopicService : ITopicService
         {
             PropertyNameCaseInsensitive = true
         };
+        
+        // 초기 더미 데이터 설정 (한 번만)
+        if (!_topics.Any())
+        {
+            InitializeTopics();
+        }
+    }
+
+    private void InitializeTopics()
+    {
+        _topics = new List<Topic>
+        {
+            new Topic
+            {
+                Id = 1,
+                Subject = "오늘 가장 기뻤던 순간",
+                TopicDate = DateTime.Today,
+                CreatedAt = DateTime.Now.AddDays(-1),
+                UpdatedAt = DateTime.Now.AddDays(-1)
+            },
+            new Topic
+            {
+                Id = 2,
+                Subject = "내일 가장 기대되는 일",
+                TopicDate = DateTime.Today.AddDays(1),
+                CreatedAt = DateTime.Now.AddDays(-2),
+                UpdatedAt = DateTime.Now.AddDays(-2)
+            },
+            new Topic
+            {
+                Id = 3,
+                Subject = "이번 주 감사했던 일",
+                TopicDate = DateTime.Today.AddDays(-1),
+                CreatedAt = DateTime.Now.AddDays(-3),
+                UpdatedAt = DateTime.Now.AddDays(-3)
+            }
+        };
     }
 
     public async Task<List<Topic>> GetTopicsAsync()
     {
         try
         {
-            // 실제 API가 없으므로 더미 데이터 반환
-            await Task.Delay(500); // API 호출 시뮬레이션
+            // API 호출 시뮬레이션
+            await Task.Delay(500);
             
-            var topics = new List<Topic>
-            {
-                new Topic
-                {
-                    Id = 1,
-                    Subject = "오늘 가장 기뻤던 순간",
-                    TopicDate = DateTime.Today,
-                    CreatedAt = DateTime.Now.AddDays(-1),
-                    UpdatedAt = DateTime.Now.AddDays(-1)
-                },
-                new Topic
-                {
-                    Id = 2,
-                    Subject = "내일 가장 기대되는 일",
-                    TopicDate = DateTime.Today.AddDays(1),
-                    CreatedAt = DateTime.Now.AddDays(-2),
-                    UpdatedAt = DateTime.Now.AddDays(-2)
-                },
-                new Topic
-                {
-                    Id = 3,
-                    Subject = "이번 주 감사했던 일",
-                    TopicDate = DateTime.Today.AddDays(-1),
-                    CreatedAt = DateTime.Now.AddDays(-3),
-                    UpdatedAt = DateTime.Now.AddDays(-3)
-                }
-            };
-
-            return topics;
+            // 메모리에 저장된 주제 목록 반환
+            return new List<Topic>(_topics);
         }
         catch (Exception)
         {
@@ -72,14 +83,20 @@ public class TopicService : ITopicService
         {
             await Task.Delay(300); // API 호출 시뮬레이션
             
+            // 새로운 ID 생성 (기존 ID 중 최대값 + 1)
+            var newId = _topics.Any() ? _topics.Max(t => t.Id) + 1 : 1;
+            
             var newTopic = new Topic
             {
-                Id = DateTime.Now.Millisecond, // 임시 ID 생성
+                Id = newId,
                 Subject = request.Subject,
                 TopicDate = request.TopicDate,
                 CreatedAt = DateTime.Now,
                 UpdatedAt = DateTime.Now
             };
+
+            // 메모리에 주제 추가
+            _topics.Add(newTopic);
 
             return newTopic;
         }
@@ -94,7 +111,17 @@ public class TopicService : ITopicService
         try
         {
             await Task.Delay(300); // API 호출 시뮬레이션
-            return true;
+            
+            var topic = _topics.FirstOrDefault(t => t.Id == id);
+            if (topic != null)
+            {
+                topic.Subject = request.Subject;
+                topic.TopicDate = request.TopicDate;
+                topic.UpdatedAt = DateTime.Now;
+                return true;
+            }
+            
+            return false;
         }
         catch (Exception)
         {
@@ -107,7 +134,15 @@ public class TopicService : ITopicService
         try
         {
             await Task.Delay(300); // API 호출 시뮬레이션
-            return true;
+            
+            var topic = _topics.FirstOrDefault(t => t.Id == id);
+            if (topic != null)
+            {
+                _topics.Remove(topic);
+                return true;
+            }
+            
+            return false;
         }
         catch (Exception)
         {
