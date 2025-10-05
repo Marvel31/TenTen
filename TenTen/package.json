@@ -1,0 +1,12 @@
+{
+  "name": "tenten-blazor-wasm",
+  "version": "1.0.0",
+  "description": "TenTen - 부부 교환 일기 Blazor WebAssembly 앱",
+  "scripts": {
+    "build": "dotnet publish -c Release -o wwwroot",
+    "dev": "dotnet run"
+  },
+  "keywords": ["blazor", "webassembly", "tenten", "diary", "couple"],
+  "author": "TenTen Team",
+  "license": "MIT"
+}

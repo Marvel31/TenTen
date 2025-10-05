@@ -1,0 +1,337 @@
+@page "/tenten"
+@using System.Linq
+@using Microsoft.AspNetCore.WebUtilities
+@inject ITenTenService TenTenService
+@inject ITopicService TopicService
+@inject IJSRuntime JSRuntime
+@inject NavigationManager NavigationManager
+
+<PageTitle>10&10 - TenTen</PageTitle>
+
+<div class="tenten-container">
+    <div class="navigation-breadcrumb">
+        <a href="/" class="breadcrumb-link">
+            <span class="bi bi-house"></span> 홈
+        </a>
+        <span class="breadcrumb-separator">></span>
+        <a href="/topics" class="breadcrumb-link">10&10 관리</a>
+        <span class="breadcrumb-separator">></span>
+        <span class="breadcrumb-current">10&10 작성</span>
+    </div>
+    
+    <div class="tenten-header">
+        <h1>💕 10&10</h1>
+        <p>10분간 마음을 적고 10분간 대화를 나누세요</p>
+    </div>
+
+    @if (isLoading)
+    {
+        <div class="text-center">
+            <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+        </div>
+    }
+    else if (tenTens.Any())
+    {
+        <div class="tenten-list">
+            @foreach (var tenTen in tenTens.OrderByDescending(t => t.CreatedAt))
+            {
+                <div class="tenten-card @(tenTen.IsReadByPartner ? "read" : "unread")">
+                    <div class="tenten-header">
+                        <div class="tenten-meta">
+                            <span class="topic-badge">@tenTen.TopicSubject</span>
+                            <span class="date-info">작성일: @tenTen.CreatedAt.ToString("yyyy-MM-dd HH:mm")</span>
+                        </div>
+                        <div class="tenten-actions">
+                            @if (tenTen.UserId == 1) // Dummy user ID for current user
+                            {
+                                <button class="btn btn-sm btn-outline-primary" @onclick="() => EditTenTen(tenTen)" title="수정">
+                                    <span class="bi bi-pencil"></span>
+                                </button>
+                                <button class="btn btn-sm btn-danger" @onclick="() => DeleteTenTen(tenTen.Id)" title="삭제">
+                                    <span class="bi bi-trash"></span>
+                                </button>
+                            }
+                            else
+                            {
+                                @if (!tenTen.IsReadByPartner)
+                                {
+                                    <button class="btn btn-sm btn-success" @onclick="() => MarkAsRead(tenTen.Id)" title="읽음으로 표시">
+                                        <span class="bi bi-check-circle"></span> 읽음
+                                    </button>
+                                }
+                            }
+                        </div>
+                    </div>
+                    <div class="tenten-content">
+                        <p>@tenTen.Content</p>
+                    </div>
+                    <div class="tenten-footer">
+                        <div class="read-status">
+                            @if (tenTen.IsReadByPartner)
+                            {
+                                <span class="badge bg-success">읽음</span>
+                            }
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <div class="empty-state">
+            <div class="empty-icon">💖</div>
+            <h3>아직 작성된 10&10이 없습니다</h3>
+            <p>이 주제에 대한 10&10이 아직 작성되지 않았습니다.</p>
+            <button class="btn btn-primary" @onclick="ShowCreateModal">
+                <span class="bi bi-pencil-square"></span> 10&10 작성하기
+            </button>
+        </div>
+    }
+</div>
+
+<!-- Create/Edit Full Screen -->
+@if (showModal)
+{
+    <div class="fullscreen-editor">
+        <div class="editor-container">
+            <div class="editor-header">
+                <h2>@(isEditing ? "10&10 수정" : "새 10&10 작성")</h2>
+                <button type="button" class="btn btn-outline-secondary" @onclick="CloseModal">
+                    <span class="bi bi-x-lg"></span> 닫기
+                </button>
+            </div>
+            <div class="editor-content">
+                <EditForm Model="currentTenTen" OnValidSubmit="SaveTenTen">
+                    <DataAnnotationsValidator />
+                    
+                    <div class="form-group">
+                        <label>주제</label>
+                        <div class="selected-topic-display">
+                            @if (selectedTopicId > 0)
+                            {
+                                var selectedTopic = topics.FirstOrDefault(t => t.Id == selectedTopicId);
+                                if (selectedTopic != null)
+                                {
+                                    <div class="topic-info">
+                                        <span class="topic-subject">@selectedTopic.Subject</span>
+                                        <span class="topic-date">(@selectedTopic.TopicDate.ToString("yyyy-MM-dd"))</span>
+                                    </div>
+                                }
+                            }
+                            else
+                            {
+                                <span class="text-muted">주제가 선택되지 않았습니다</span>
+                            }
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="content">10&10 내용 *</label>
+                        <InputTextArea id="content" @bind-Value="currentTenTen.Content" 
+                                     class="form-control content-textarea" rows="20" 
+                                     placeholder="10분간 마음을 적어보세요..." />
+                        <ValidationMessage For="@(() => currentTenTen.Content)" class="text-danger" />
+                        <small class="form-text text-muted">최소 10자 이상 입력해주세요.</small>
+                    </div>
+
+                    @if (!string.IsNullOrEmpty(errorMessage))
+                    {
+                        <div class="alert alert-danger" role="alert">
+                            @errorMessage
+                        </div>
+                    }
+
+                    <div class="editor-actions">
+                        <button type="button" class="btn btn-secondary" @onclick="CloseModal">취소</button>
+                        <button type="submit" class="btn btn-primary" disabled="@isSaving">
+                            @if (isSaving)
+                            {
+                                <span class="spinner-border spinner-border-sm me-2" role="status"></span>
+                            }
+                            @(isEditing ? "수정" : "작성")
+                        </button>
+                    </div>
+                </EditForm>
+            </div>
+        </div>
+    </div>
+}
+
+@code {
+    private List<TenTenEntry> tenTens = new();
+    private List<Topic> topics = new();
+    private bool isLoading = true;
+    private bool showModal = false;
+    private bool isEditing = false;
+    private bool isSaving = false;
+    private string errorMessage = string.Empty;
+    private CreateTenTenRequest currentTenTen = new();
+    private int? editingTenTenId = null;
+    private int selectedTopicId = 0; // 0 for all topics
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadTopics();
+        
+        // 쿼리 파라미터에서 topicId 확인
+        var uri = NavigationManager.ToAbsoluteUri(NavigationManager.Uri);
+        if (QueryHelpers.ParseQuery(uri.Query).TryGetValue("topicId", out var topicIdValues))
+        {
+            if (int.TryParse(topicIdValues.FirstOrDefault(), out var topicId))
+            {
+                selectedTopicId = topicId;
+            }
+        }
+        
+        await LoadTenTens();
+    }
+
+    private async Task LoadTopics()
+    {
+        try
+        {
+            topics = await TopicService.GetTopicsAsync();
+        }
+        catch (Exception ex)
+        {
+            errorMessage = $"주제를 불러오는 중 오류가 발생했습니다: {ex.Message}";
+        }
+    }
+
+    private async Task LoadTenTens()
+    {
+        isLoading = true;
+        try
+        {
+            if (selectedTopicId == 0)
+            {
+                tenTens = await TenTenService.GetTenTensAsync();
+            }
+            else
+            {
+                tenTens = await TenTenService.GetTenTensByTopicAsync(selectedTopicId);
+            }
+        }
+        catch (Exception ex)
+        {
+            errorMessage = $"10&10을 불러오는 중 오류가 발생했습니다: {ex.Message}";
+        }
+        finally
+        {
+            isLoading = false;
+            StateHasChanged();
+        }
+    }
+
+    private async Task LoadTenTensForTopic()
+    {
+        await LoadTenTens();
+    }
+
+    private void ShowCreateModal()
+    {
+        isEditing = false;
+        editingTenTenId = null;
+        currentTenTen = new CreateTenTenRequest
+        {
+            TopicId = selectedTopicId
+        };
+        errorMessage = string.Empty;
+        showModal = true;
+    }
+
+    private void EditTenTen(TenTenEntry tenTen)
+    {
+        isEditing = true;
+        editingTenTenId = tenTen.Id;
+        currentTenTen = new CreateTenTenRequest
+        {
+            Content = tenTen.Content,
+            TopicId = tenTen.TopicId
+        };
+        errorMessage = string.Empty;
+        showModal = true;
+    }
+
+    private void CloseModal()
+    {
+        showModal = false;
+        isEditing = false;
+        editingTenTenId = null;
+        currentTenTen = new CreateTenTenRequest();
+        errorMessage = string.Empty;
+    }
+
+    private async Task SaveTenTen()
+    {
+        isSaving = true;
+        errorMessage = string.Empty;
+        StateHasChanged();
+
+        try
+        {
+            if (isEditing && editingTenTenId.HasValue)
+            {
+                var updateRequest = new UpdateTenTenRequest
+                {
+                    Content = currentTenTen.Content
+                };
+                await TenTenService.UpdateTenTenAsync(editingTenTenId.Value, updateRequest);
+            }
+            else
+            {
+                await TenTenService.CreateTenTenAsync(currentTenTen);
+            }
+
+            await LoadTenTens();
+            CloseModal();
+        }
+        catch (Exception ex)
+        {
+            errorMessage = $"10&10 저장 중 오류가 발생했습니다: {ex.Message}";
+        }
+        finally
+        {
+            isSaving = false;
+            StateHasChanged();
+        }
+    }
+
+    private async Task DeleteTenTen(int id)
+    {
+        if (await JSRuntime.InvokeAsync<bool>("confirm", "정말로 이 10&10을 삭제하시겠습니까?"))
+        {
+            try
+            {
+                var success = await TenTenService.DeleteTenTenAsync(id);
+                if (success)
+                {
+                    await LoadTenTens();
+                }
+            }
+            catch (Exception ex)
+            {
+                errorMessage = $"10&10 삭제 중 오류가 발생했습니다: {ex.Message}";
+            }
+        }
+    }
+
+    private async Task MarkAsRead(int id)
+    {
+        try
+        {
+            var success = await TenTenService.MarkAsReadAsync(id);
+            if (success)
+            {
+                await LoadTenTens();
+            }
+        }
+        catch (Exception ex)
+        {
+            errorMessage = $"10&10 읽음 처리 중 오류가 발생했습니다: {ex.Message}";
+        }
+    }
+}

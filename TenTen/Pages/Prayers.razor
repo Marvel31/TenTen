@@ -1,0 +1,167 @@
+@page "/prayers"
+
+<PageTitle>주요 기도문 - TenTen</PageTitle>
+
+<div class="prayers-container">
+    <div class="navigation-breadcrumb">
+        <a href="/" class="breadcrumb-link">
+            <span class="bi bi-house"></span> 홈
+        </a>
+        <span class="breadcrumb-separator">></span>
+        <span class="breadcrumb-current">주요 기도문</span>
+    </div>
+
+    <div class="prayers-header">
+        <h1>🙏 주요 기도문</h1>
+        <p>부부와 가정을 위한 특별한 기도문들</p>
+    </div>
+
+    <div class="prayers-list">
+        <div class="prayer-card">
+            <div class="prayer-header" @onclick="() => TogglePrayer(1)">
+                <div class="prayer-title">
+                    <h3>부부를 위한 기도</h3>
+                    <p>서로를 사랑하고 이해하는 부부가 되도록</p>
+                </div>
+                <div class="prayer-toggle">
+                    <span class="toggle-icon @(expandedPrayers.Contains(1) ? "expanded" : "")">
+                        <span class="bi bi-chevron-down"></span>
+                    </span>
+                </div>
+            </div>
+            @if (expandedPrayers.Contains(1))
+            {
+                <div class="prayer-content">
+                    <div class="prayer-text">
+                        <p class="prayer-line">사랑하시는 하느님,</p>
+                        <p class="prayer-line">저희 부부가 서로를 진정으로 사랑하고 이해할 수 있도록 도와주시고,</p>
+                        <p class="prayer-line">힘든 시간에도 함께하며 서로를 격려하고 위로할 수 있게 해주세요.</p>
+                        <p class="prayer-line">매일매일 사랑이 깊어지고 신뢰가 더해지는 부부가 되도록 인도해주시고,</p>
+                        <p class="prayer-line">함께 기쁨을 나누고 슬픔을 함께 견딜 수 있는 힘을 주세요.</p>
+                        <p class="prayer-line">아멘.</p>
+                    </div>
+                </div>
+            }
+        </div>
+
+        <div class="prayer-card">
+            <div class="prayer-header" @onclick="() => TogglePrayer(2)">
+                <div class="prayer-title">
+                    <h3>가정을 위한 기도</h3>
+                    <p>화목하고 행복한 가정이 되도록</p>
+                </div>
+                <div class="prayer-toggle">
+                    <span class="toggle-icon @(expandedPrayers.Contains(2) ? "expanded" : "")">
+                        <span class="bi bi-chevron-down"></span>
+                    </span>
+                </div>
+            </div>
+            @if (expandedPrayers.Contains(2))
+            {
+                <div class="prayer-content">
+                    <div class="prayer-text">
+                        <p class="prayer-line">하늘의 아버지,</p>
+                        <p class="prayer-line">저희 가정에 평화와 사랑이 넘치도록 축복해주시고,</p>
+                        <p class="prayer-line">모든 가족 구성원이 서로를 존중하고 사랑하는 마음을 갖도록 도와주세요.</p>
+                        <p class="prayer-line">어려운 시기에도 희망을 잃지 않고 함께 극복할 수 있는 힘을 주시고,</p>
+                        <p class="prayer-line">매일 기쁨과 감사가 넘치는 가정이 되도록 인도해주세요.</p>
+                        <p class="prayer-line">아멘.</p>
+                    </div>
+                </div>
+            }
+        </div>
+
+        <div class="prayer-card">
+            <div class="prayer-header" @onclick="() => TogglePrayer(3)">
+                <div class="prayer-title">
+                    <h3>용서를 위한 기도</h3>
+                    <p>서로를 용서하고 화해하는 마음</p>
+                </div>
+                <div class="prayer-toggle">
+                    <span class="toggle-icon @(expandedPrayers.Contains(3) ? "expanded" : "")">
+                        <span class="bi bi-chevron-down"></span>
+                    </span>
+                </div>
+            </div>
+            @if (expandedPrayers.Contains(3))
+            {
+                <div class="prayer-content">
+                    <div class="prayer-text">
+                        <p class="prayer-line">자비로우신 하느님,</p>
+                        <p class="prayer-line">저희가 서로에게 상처를 주었을 때 용서할 수 있는 마음을 주시고,</p>
+                        <p class="prayer-line">미워하고 원망하는 마음보다는 사랑하고 이해하는 마음을 갖도록 도와주세요.</p>
+                        <p class="prayer-line">서로의 실수와 약함을 받아들이고 함께 성장할 수 있는 지혜를 주시고,</p>
+                        <p class="prayer-line">진정한 화해와 평화가 저희 가정에 깃들도록 축복해주세요.</p>
+                        <p class="prayer-line">아멘.</p>
+                    </div>
+                </div>
+            }
+        </div>
+
+        <div class="prayer-card">
+            <div class="prayer-header" @onclick="() => TogglePrayer(4)">
+                <div class="prayer-title">
+                    <h3>감사를 위한 기도</h3>
+                    <p>일상의 소중함을 감사하는 마음</p>
+                </div>
+                <div class="prayer-toggle">
+                    <span class="toggle-icon @(expandedPrayers.Contains(4) ? "expanded" : "")">
+                        <span class="bi bi-chevron-down"></span>
+                    </span>
+                </div>
+            </div>
+            @if (expandedPrayers.Contains(4))
+            {
+                <div class="prayer-content">
+                    <div class="prayer-text">
+                        <p class="prayer-line">감사하신 하느님,</p>
+                        <p class="prayer-line">저희에게 주신 모든 은혜에 감사드립니다.</p>
+                        <p class="prayer-line">서로를 만나게 해주시고 사랑할 수 있게 해주신 것에 감사하며,</p>
+                        <p class="prayer-line">매일매일의 작은 기쁨들과 소중한 순간들을 잊지 않고 감사하겠습니다.</p>
+                        <p class="prayer-line">앞으로도 감사한 마음으로 살아갈 수 있도록 도와주세요.</p>
+                        <p class="prayer-line">아멘.</p>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+
+    <div class="prayer-tips">
+        <h2>💡 기도 생활을 위한 팁</h2>
+        <div class="tips-grid">
+            <div class="tip-item">
+                <h4>🕐 정해진 시간</h4>
+                <p>매일 같은 시간에 함께 기도하는 시간을 만들어보세요.</p>
+            </div>
+            <div class="tip-item">
+                <h4>🤲 함께 기도하기</h4>
+                <p>부부가 함께 기도하며 마음을 나누는 시간을 가져보세요.</p>
+            </div>
+            <div class="tip-item">
+                <h4>💭 마음의 준비</h4>
+                <p>기도 전에 마음을 차분히 하고 집중할 수 있는 환경을 만들어보세요.</p>
+            </div>
+            <div class="tip-item">
+                <h4>📖 성경 읽기</h4>
+                <p>기도와 함께 성경을 읽으며 하느님의 말씀을 묵상해보세요.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    private HashSet<int> expandedPrayers = new();
+
+    private void TogglePrayer(int prayerId)
+    {
+        if (expandedPrayers.Contains(prayerId))
+        {
+            expandedPrayers.Remove(prayerId);
+        }
+        else
+        {
+            expandedPrayers.Add(prayerId);
+        }
+        StateHasChanged();
+    }
+}
