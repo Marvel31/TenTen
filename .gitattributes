@@ -1,0 +1,6 @@
+* binary
+*.wasm binary
+*.dll binary
+*.pdb binary
+*.gz binary
+*.br binary
