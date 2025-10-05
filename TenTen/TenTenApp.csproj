@@ -8,6 +8,8 @@
     <BlazorWebAssemblyPreserveCollationData>false</BlazorWebAssemblyPreserveCollationData>
     <PublishTrimmed>false</PublishTrimmed>
     <BlazorWebAssemblyDebugging>false</BlazorWebAssemblyDebugging>
+    <BlazorWebAssemblyLazyLoad>false</BlazorWebAssemblyLazyLoad>
+    <BlazorWebAssemblyRuntimeCompilation>false</BlazorWebAssemblyRuntimeCompilation>
   </PropertyGroup>
 
   <ItemGroup>
