@@ -1,12 +1,9 @@
 {
   "version": 2,
-  "buildCommand": "dotnet publish -c Release -o output",
-  "outputDirectory": "output/wwwroot",
-  "framework": "blazor",
   "builds": [
     {
-      "src": "TenTen/TenTenApp.csproj",
-      "use": "@vercel/dotnet"
+      "src": "wwwroot/**",
+      "use": "@vercel/static"
     }
   ],
   "routes": [
