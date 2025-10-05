@@ -5,6 +5,9 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <BlazorCacheBootResources>false</BlazorCacheBootResources>
+    <BlazorWebAssemblyPreserveCollationData>false</BlazorWebAssemblyPreserveCollationData>
+    <PublishTrimmed>false</PublishTrimmed>
+    <BlazorWebAssemblyDebugging>false</BlazorWebAssemblyDebugging>
   </PropertyGroup>
 
   <ItemGroup>
