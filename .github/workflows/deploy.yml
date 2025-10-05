@@ -29,7 +29,9 @@ jobs:
       run: dotnet restore TenTen/TenTenApp.csproj
       
     - name: Build and publish
-      run: dotnet publish TenTen/TenTenApp.csproj -c Release -o output
+      run: |
+        cd TenTen
+        dotnet publish TenTenApp.csproj -c Release -o output --no-restore -p:StaticWebAssetBasePath=/ -p:UseStaticWebAssets=false
       
     - name: Setup Pages
       uses: actions/configure-pages@v4
