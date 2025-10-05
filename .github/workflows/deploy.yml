@@ -25,13 +25,10 @@ jobs:
       with:
         dotnet-version: '9.0.x'
         
-    - name: Restore dependencies
-      run: dotnet restore TenTen/TenTenApp.csproj
-      
     - name: Build and publish
       run: |
         cd TenTen
-        dotnet publish TenTenApp.csproj -c Release -o output --no-restore -p:StaticWebAssetBasePath=/ -p:UseStaticWebAssets=false
+        dotnet publish TenTenApp.csproj -c Release -o publish --no-restore -p:StaticWebAssetsEnabled=false -p:PublishTrimmed=false
       
     - name: Setup Pages
       uses: actions/configure-pages@v4
@@ -39,7 +36,7 @@ jobs:
     - name: Upload artifact
       uses: actions/upload-pages-artifact@v3
       with:
-        path: './TenTen/output/wwwroot'
+        path: './TenTen/publish/wwwroot'
 
   deploy:
     environment:
